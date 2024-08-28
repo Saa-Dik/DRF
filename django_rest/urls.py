@@ -6,5 +6,5 @@ from drapi import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    # path('api-info/', views.organization_info)
+    path('student-info/<int:pk>', views.student_information),
 ]
