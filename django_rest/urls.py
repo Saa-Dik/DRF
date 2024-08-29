@@ -7,4 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('student-info/<int:pk>', views.student_information),
+    path('student_list/',views.student_list),
 ]

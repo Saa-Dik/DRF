@@ -6,7 +6,7 @@ from . serializers import StudentSerializer
 from rest_framework.renderers import JSONRenderer
 # # Create your views here.
 
-# #queary set :
+#queary set :
 # def organization_info(request):
 #     #complex data
 #     info = Organization.objects.all()
@@ -35,3 +35,16 @@ def student_information(request, pk):
     # json data to frontend 
     return HttpResponse(json_data, content_type='application/json')
 
+#queary set:
+def student_list(request):
+    #complex data to python data
+    info = Student.objects.all()# akn a amra (many =True) aita use korar karon amara (info = Student.objects.all() ai line a (Student) model a onek data ace tai amra many= true use korci nah korle error asbe
+
+    serializer = StudentSerializer(info, many =True)
+
+    
+    # python data to json renderer
+    json_data = JSONRenderer().render(serializer.data)
+
+    # json data to frontend 
+    return HttpResponse(json_data, content_type='application/json')
