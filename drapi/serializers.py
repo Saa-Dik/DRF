@@ -17,3 +17,7 @@ class StudentSerializer(serializers.Serializer):
     #     name = forms.CharField(max_length=100)
     #     roll = forms.IntegerField()
     #     city = forms.CharField(max_length=100)
+    """amara akn ceate method use korci karon amader je valided_data ta dibo tar jnno tar jnno amder akti model instance create korbe ar ai model instance ta save korbe """
+    def create(self,validated_data):
+        return Student.object.create(**validated_data)
+

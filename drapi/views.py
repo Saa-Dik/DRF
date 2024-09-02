@@ -1,9 +1,9 @@
 # study mart:
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from . models import Student
 from . serializers import StudentSerializer
-from rest_framework.renderers import JSONRenderer
+from rest_framework.renderers import JSONRenderer 
 # # Create your views here.
 
 #queary set :
@@ -31,9 +31,10 @@ def student_information(request, pk):
     
     # python data to json renderer
     json_data = JSONRenderer().render(serializer.data)
-
     # json data to frontend 
     return HttpResponse(json_data, content_type='application/json')
+
+    #return JsonResponse(serializer.data) #akn return JsonResponse use korle 33 & 35 line likhar drk nai karon ai 2 line ar kaj JsonResponse kore take. 
 
 #queary set:
 def student_list(request):
@@ -48,3 +49,4 @@ def student_list(request):
 
     # json data to frontend 
     return HttpResponse(json_data, content_type='application/json')
+
