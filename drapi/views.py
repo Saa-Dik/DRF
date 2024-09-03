@@ -1,12 +1,12 @@
 # study mart:
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from .models import Student
 from .serializers import StudentSerializer
 from rest_framework.renderers import JSONRenderer 
 import io
 from rest_framework.parsers import JSONParser
-
+from django.views.decorators.csrf import csrf_exempt
 #  # Create your views here.
 
 #queary set :
@@ -54,20 +54,21 @@ def student_list(request):
     return HttpResponse(json_data, content_type='application/json')
 
 #amara serialization ar jnno view create korbo ja amader deserialization ar kaje lagbe:
+@csrf_exempt
 def student_create(request):  
-    if request.method =='POST':
+    if request.method == 'POST':
         json_data = request.body
         # json_data to stame:
         stream = io.BytesIO(json_data)
         # strame to python data:
         python_data = JSONParser().parse(stream)
         # python to complex_data/serializer
-        serializer = StudentSerializer(python_data)
-        
+        serializer = StudentSerializer(data=python_data)
         if serializer.is_valid():
             serializer.save()
-            response_msg = {
-                'msg': 'Data Created'
-            }
+            response_msg = {'msg': 'Data Created'}
             json_data = JSONRenderer().render(response_msg)
-            return HttpResponse(json_data, content_type= 'application/json')
+            return HttpResponse(json_data, content_type='application/json')
+        json_data = JSONRenderer().render(serializer.errors)
+        return HttpResponse(json_data, content_type= 'application/json')
+    return HttpResponse(status=405)  # Method Not Allowed if not POST
