@@ -1,10 +1,13 @@
 # study mart:
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from . models import Student
-from . serializers import StudentSerializer
+from .models import Student
+from .serializers import StudentSerializer
 from rest_framework.renderers import JSONRenderer 
-# # Create your views here.
+import io
+from rest_framework.parsers import JSONParser
+
+#  # Create your views here.
 
 #queary set :
 # def organization_info(request):
@@ -50,3 +53,21 @@ def student_list(request):
     # json data to frontend 
     return HttpResponse(json_data, content_type='application/json')
 
+#amara serialization ar jnno view create korbo ja amader deserialization ar kaje lagbe:
+def student_create(request):  
+    if request.method =='POST':
+        json_data = request.body
+        # json_data to stame:
+        stream = io.BytesIO(json_data)
+        # strame to python data:
+        python_data = JSONParser().parse(stream)
+        # python to complex_data/serializer
+        serializer = StudentSerializer(python_data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            response_msg = {
+                'msg': 'Data Created'
+            }
+            json_data = JSONRenderer().render(response_msg)
+            return HttpResponse(json_data, content_type= 'application/json')
