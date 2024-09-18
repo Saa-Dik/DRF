@@ -74,15 +74,61 @@ from django.views.decorators.csrf import csrf_exempt
 #     return HttpResponse(status=405) # Method Not Allowed if not POST
 
 #data update:
+# aita amra data ke GET korsr jnno use korci
+# def student_update(request):
+#     if request.method == 'GET':
+#         json_data = request.body
+#         stream = io.BytesIO(json_data)
+#         python_data = JSONParser().parse(stream)
+#         id = python_data.get('id', None)
+#         if id is not None:
+#             student = Student.objects.get(id=id)
+#             serializer = StudentSerializer(student)
+#             json_data = JSONRenderer().render(serializer.data)
+#             return HttpResponse(json_data, content_type='application/json')
+        
+#     # All data return:
+#     student = Student.objects.all()
+#     serislizer = StudentSerializer(student, many=True)
+#     json_data = JSONRenderer().render(serislizer.data)
+#     return HttpResponse(json_data,content_type='application/json')
+
+# # aita amra data ke POST korsr jnno use korci
+#     if request.method == 'POST':
+#         json_data = request.body
+#         # json_data to stame:
+#         stream = io.BytesIO(json_data)
+#         # strame to python data:
+#         python_data = JSONParser().parse(stream)
+#         # python to complex_data/serializer
+#         serializer = StudentSerializer(data=python_data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             response_msg = {'msg': 'Data Created'}
+#             json_data = JSONRenderer().render(response_msg)
+#             return HttpResponse(json_data, content_type='application/json')
+#         json_data = JSONRenderer().render(serializer.errors)
+#         return HttpResponse(json_data, content_type= 'application/json')
+
+#Start
 def student_update(request):
     if request.method == 'GET':
         json_data = request.body
         stream = io.BytesIO(json_data)
-        python_data = JSONParser().parse(stream)
+        python_data  = JSONParser().parse(stream)
         id = python_data.get('id', None)
         if id is not None:
             student = Student.objects.get(id=id)
-            serializer = StudentSerializer(student)
+            serializer =StudentSerializer(student)
             json_data = JSONRenderer().render(serializer.data)
             return HttpResponse(json_data, content_type='application/json')
-            
+        
+        info = Student.objects.all()# akn a amra (many =True) aita use korar karon amara (info = Student.objects.all() ai line a (Student) model a onek data ace tai amra many= true use korci nah korle error asbe
+        serializer = StudentSerializer(info, many =True)
+
+        json_data = JSONRenderer().render(serializer.data)
+
+        return HttpResponse(json_data, content_type='application/json')
+
+         
+#Start
