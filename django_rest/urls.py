@@ -10,4 +10,5 @@ urlpatterns = [
     # path('student_list/',views.student_list),
     # path('student_create/',views.student_create),
     path('student_update/',views.student_update),
+     path('student-delete/',views.student_update),
 ]
