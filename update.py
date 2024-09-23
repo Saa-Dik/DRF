@@ -5,7 +5,10 @@ import requests
 import json
 
 # amra get rquest send korbo jate amader database ar table teke data paite pari
-URL = "http://127.0.0.1:8000/student_update/"
+# URL = "http://127.0.0.1:8000/student_update/"
+# URL = "http://127.0.0.1:8000/student-delete/"
+URL ="http://127.0.0.1:8000/student-api/" # aita use korci amra class based view ar jnno
+
 
 def get_data(id=None):
     data = {}
@@ -15,8 +18,7 @@ def get_data(id=None):
     res = requests.get(url = URL, data =json_data)
     data = res.json()
     print(data)
-# get_data()
-
+get_data(1)
 
 #amra toh age GET request ar jnno likhci akn amara POST method dekhbo 
 def post_data():
@@ -46,4 +48,13 @@ def update_data():
     res = requests.put(url = URL, data=json_data) # amra akn a data ta ke update korbo tai 
     data = res.json()
     print(data)
-update_data()
+# 
+#data delete ar jnno
+def delete_data():
+    data = {
+        'id': 2,
+    }
+    json_data = json.dumps(data)
+    res = requests.delete(url=URL, data= json_data)
+    data = res.json()
+    print(data)

@@ -78,7 +78,7 @@ from django.views import View #amra akn a class based use korci
 
 #data update:
 # aita amra data ke GET korsr jnno use korci
-@csrf_exempt
+# @csrf_exempt
 # def student_update(request):
     # if request.method == 'GET':
         # amara akn get ar line hide korci karon amra akn a class based view use korci tai amar aita ke hide ba cut kore dibo
